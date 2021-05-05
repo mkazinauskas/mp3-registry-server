@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: register-api
+  profiles:
+    active: prod
+  cloud:
+    config:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+server:
+  port: 8787

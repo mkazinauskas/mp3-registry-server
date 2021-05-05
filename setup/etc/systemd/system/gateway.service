@@ -1,0 +1,11 @@
+[Unit]
+Description=Gateway
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/bin/bash /var/gateway/gateway.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

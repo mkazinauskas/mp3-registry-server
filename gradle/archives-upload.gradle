@@ -1,0 +1,34 @@
+apply plugin: 'maven'
+apply from: "${rootDir}/gradle/helpers/git-version.gradle"
+
+jar {
+    version = generateVersion()
+    manifest {
+        attributes 'Implementation-Version': generateVersion()
+    }
+}
+
+task(createVersionInfo) << {
+    File file = new File('version.info')
+    file.write(generateVersion())
+}
+
+repositories {
+    maven {
+        url "${nexusUrl}/content/groups/public"
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/maven-releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/maven-snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
+}
+

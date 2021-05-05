@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: modestukasai
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: version
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: encoded_password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: bit
+              - column:
+                  name: account_not_expired
+                  type: bit
+              - column:
+                  name: credentials_not_expired
+                  type: bit
+              - column:
+                  name: account_not_locked
+                  type: bit
+              - column:
+                  name: unique_id
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_reset_code
+                  type: varchar(32)
+                  constraints:
+                    nullable: true
+                    unique: true
+              - column:
+                  name: activation_code
+                  type: varchar(32)
+                  constraints:
+                    nullable: true
+                    unique: true
+        - createTable:
+            tableName: user_authorities
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: user_authorities
+            columnNames: user_id,authority
+        - addForeignKeyConstraint:
+            constraintName: FK_user_to_user_authorities
+            baseTableName: user_authorities
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id

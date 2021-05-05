@@ -1,0 +1,9 @@
+spring:
+  data:
+    elasticsearch:
+      properties:
+        - path.home: /home/modestas/elastic
+        - transport.tcp.connect_timeout: 120s
+
+register:
+  url: http://538909.s.dedikuoti.lt:8787

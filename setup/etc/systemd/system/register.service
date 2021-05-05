@@ -1,0 +1,11 @@
+[Unit]
+Description=Mp3 register
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/bin/bash /var/register/register.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

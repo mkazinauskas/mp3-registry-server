@@ -1,0 +1,29 @@
+gradle.allprojects {
+    ext.generateVersion = {
+        String version = getGitVersion() + checkIfGitRepositoryIsDirty()
+        if (project.hasProperty('versionType')) {
+            version += '-' + project.property('versionType')
+        } else {
+            version += '-RELEASE'
+        }
+        return version
+    }
+}
+
+def getGitVersion() {
+    def result = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = result
+    }
+    return result.toString().trim().replace('\'', '')
+}
+
+def checkIfGitRepositoryIsDirty() {
+    def result = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'status', '--porcelain', '--untracked-files=no'
+        standardOutput = result
+    }
+    return result.toString().trim().size() > 0 ? '-dirty' : ''
+}

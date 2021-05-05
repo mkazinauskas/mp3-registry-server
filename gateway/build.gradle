@@ -1,0 +1,21 @@
+jar {
+	baseName = 'gateway'
+}
+
+dependencies {
+	compile libs.boot.starter.zuul
+//	compile libs.boot.starter.configClient
+	compile libs.boot.starter.actuator
+//	compile libs.boot.starter.eurekaClient
+}
+
+def mainClassName = 'commons.GatewayApplication'
+
+task bootRunDev(type: org.springframework.boot.gradle.run.BootRunTask) {
+	group = 'Application'
+	doFirst() {
+		main = mainClassName
+		classpath = sourceSets.main.runtimeClasspath
+		systemProperty 'spring.profiles.active', 'dev'
+	}
+}

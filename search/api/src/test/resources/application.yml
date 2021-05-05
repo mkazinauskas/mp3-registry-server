@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: test
+  data:
+    elasticsearch:
+      properties:
+        - path.home: target/elastic
+        - transport.tcp.connect_timeout: 120s
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+
+register:
+  url: http://undefined:8787

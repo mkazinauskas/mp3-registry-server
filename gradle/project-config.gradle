@@ -1,0 +1,43 @@
+ext.runnableProjects = [project(':authorization'),
+                        project(':configuration'),
+                        project(':gateway'),
+                        project(':service-discovery'),
+                        project(':register:api'),
+                        project(':search:api')]
+
+ext.rootProjects = [
+        project(':register'),
+        project(':search')
+]
+
+configure(runnableProjects) {
+//    apply from: "${rootDir}/gradle/archives-upload.gradle"
+
+    springBoot {
+        executable = true
+    }
+
+    bootRepackage {
+        withJarTask = jar
+    }
+}
+
+configure(subprojects - rootProjects) {
+    afterEvaluate {
+        task buildAll {
+            dependsOn build
+        }
+    }
+}
+
+configure(subprojects - runnableProjects) {
+    tasks.remove(bootRun)
+
+    springBoot {
+        executable = false
+    }
+
+    bootRepackage {
+        enabled = false
+    }
+}

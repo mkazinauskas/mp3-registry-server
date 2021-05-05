@@ -1,0 +1,32 @@
+configure(project(':search:domain')) {
+    dependencies {
+        compile libs.boot.starter.elasticSearch
+        compile libs.boot.starter.validation
+        runtime libs.jna
+    }
+}
+
+configure(project(':search:api')) {
+    jar {
+        baseName = 'search'
+    }
+
+    dependencies {
+        compile project(':search:domain')
+        compile libs.boot.starter.configClient
+        compile libs.boot.starter.actuator
+        compile libs.boot.starter.web
+        compile libs.boot.starter.hateoas
+    }
+
+    def mainClassName = 'search.ApiApplication'
+
+    task bootRunDev(type: org.springframework.boot.gradle.run.BootRunTask) {
+        group = 'Application'
+        doFirst() {
+            main = mainClassName
+            classpath = sourceSets.main.runtimeClasspath
+            systemProperty 'spring.profiles.active', 'dev'
+        }
+    }
+}

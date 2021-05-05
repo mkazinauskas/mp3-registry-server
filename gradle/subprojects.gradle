@@ -1,0 +1,68 @@
+subprojects {
+    apply plugin: 'groovy'
+    apply plugin: 'org.springframework.boot'
+    apply from: "${rootDir}/gradle/checkstyle.gradle"
+    apply from: "${rootDir}/gradle/codenarc.gradle"
+
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    compileJava.options.encoding = 'UTF-8'
+    compileGroovy.options.encoding = 'UTF-8'
+
+    sourceSets {
+        main {
+            java {
+                srcDirs = []
+            }
+            groovy {
+                srcDirs += ['src/main/groovy', 'src/main/java']
+            }
+        }
+
+        test {
+            java {
+                srcDirs = []
+            }
+            groovy {
+                srcDirs += ['src/test/groovy', 'src/test/java']
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        compile libs.boot.devTools
+        compile libs.groovy
+        compile libs.apacheCommons
+
+        testCompile libs.boot.test.starter
+        testCompile libs.spockCore
+        testCompile libs.spockSpring
+        testCompile libs.cglib
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom libs.cloud.dependencies
+        }
+    }
+
+    bootRun {
+        addResources = true
+    }
+
+    jar {
+        exclude 'application-dev.properties'
+        exclude 'application-dev.yml'
+        exclude 'bootstrap-dev.properties'
+        exclude 'bootstrap-dev.yml'
+    }
+}

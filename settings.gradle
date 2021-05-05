@@ -1,0 +1,4 @@
+include 'gateway', 'service-discovery', 'configuration', 'authorization'
+include 'register', 'register:domain', 'register:service', 'register:api'
+include 'search', 'search:domain', 'search:api'
+

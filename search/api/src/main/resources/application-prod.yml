@@ -1,0 +1,8 @@
+spring:
+  data:
+    elasticsearch:
+      properties:
+        - path.home: /var/search/elastic
+        - transport.tcp.connect_timeout: 120s
+register:
+  url: http://localhost:8787

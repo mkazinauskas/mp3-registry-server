@@ -1,0 +1,43 @@
+configure(project(':register:domain')) {
+    dependencies {
+        compile libs.boot.starter.jpa
+        compile libs.liquibase
+        compile libs.boot.starter.validation
+        compile libs.apacheCommonsCodec
+
+        runtime libs.mysqlConnector
+
+        testCompile libs.h2database
+    }
+}
+
+configure(project(':register:service')) {
+    dependencies {
+        compile project(':register:domain')
+    }
+}
+
+configure(project(':register:api')) {
+    jar {
+        baseName = 'register'
+    }
+
+    def mainClassName = 'register.ApiApplication'
+
+    task bootRunDev(type: org.springframework.boot.gradle.run.BootRunTask) {
+        group = 'Application'
+        doFirst() {
+            main = mainClassName
+            classpath = sourceSets.main.runtimeClasspath
+            systemProperty 'spring.profiles.active', 'dev'
+        }
+    }
+
+    dependencies {
+        compile project(':register:service')
+        compile libs.boot.starter.web
+        compile libs.boot.starter.hateoas
+
+        testCompile libs.h2database
+    }
+}

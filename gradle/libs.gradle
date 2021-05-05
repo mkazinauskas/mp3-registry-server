@@ -1,0 +1,47 @@
+ext {
+    spock_version = '1.0-groovy-2.4'
+    cglib_version = '3.2.2'
+    apacheCommons_version = '3.4'
+}
+
+ext.libs = [
+        boot              : [
+                starter : [
+                        default      : 'org.springframework.boot:spring-boot-starter',
+                        zuul         : 'org.springframework.cloud:spring-cloud-starter-zuul',
+                        jpa          : 'org.springframework.boot:spring-boot-starter-data-jpa',
+                        elasticSearch: 'org.springframework.boot:spring-boot-starter-data-elasticsearch',
+                        undertow     : 'org.springframework.boot:spring-boot-starter-undertow',
+                        web          : 'org.springframework.boot:spring-boot-starter-web',
+                        actuator     : 'org.springframework.boot:spring-boot-starter-actuator',
+                        eurekaServer : 'org.springframework.cloud:spring-cloud-starter-eureka-server',
+                        eurekaClient : 'org.springframework.cloud:spring-cloud-starter-eureka',
+                        configServer : 'org.springframework.cloud:spring-cloud-config-server',
+                        configClient : 'org.springframework.cloud:spring-cloud-config-client',
+                        hateoas      : 'org.springframework.boot:spring-boot-starter-hateoas',
+                        validation   : 'org.springframework.boot:spring-boot-starter-validation',
+                        security     : 'org.springframework.boot:spring-boot-starter-security',
+                        feign         : 'org.springframework.cloud:spring-cloud-starter-feign'
+                ],
+                devTools: 'org.springframework.boot:spring-boot-devtools',
+                test    : [
+                        starter: 'org.springframework.boot:spring-boot-starter-test'
+                ]
+        ],
+        cloud             : [
+                dependencies: "org.springframework.cloud:spring-cloud-dependencies:Camden.SR5",
+                starter     : [
+                        oauth2: 'org.springframework.cloud:spring-cloud-starter-oauth2'
+                ]
+        ],
+        groovy            : 'org.codehaus.groovy:groovy-all:2.4.7',
+        h2database        : 'com.h2database:h2',
+        mysqlConnector    : 'mysql:mysql-connector-java',
+        liquibase         : 'org.liquibase:liquibase-core',
+        spockCore         : "org.spockframework:spock-core:${spock_version}",
+        spockSpring       : "org.spockframework:spock-spring:${spock_version}",
+        cglib             : "cglib:cglib-nodep:${cglib_version}",
+        apacheCommons     : "org.apache.commons:commons-lang3:${apacheCommons_version}",
+        apacheCommonsCodec: 'commons-codec:commons-codec:1.4',
+        jna               : 'net.java.dev.jna:jna'
+]
